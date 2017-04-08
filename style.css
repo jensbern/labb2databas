@@ -1,0 +1,58 @@
+html body {
+	background-color: #9fc2fc;
+}
+
+/*------------------------- STARTSIDA -------------------------*/
+/* Överskrift */ 
+.header{
+	padding-top: 20%;
+	color: black;
+	font-size: 60px;
+	text-align: center;
+	font-family: 'Signika', sans-serif;
+	font-weight: bold;
+}
+
+.undertext{
+	color: black;
+	font-size: 17px;
+	text-align: center;
+	font-style: italic;
+	font-family: 'Asap', sans-serif;
+}
+
+/* knappar */
+.buttondiv{
+	text-align: center;
+}
+
+.btn{
+	font-size: 20px;
+	background-color: #b8fcbd;
+	color:black;
+}
+
+.btn:hover{
+	font-size: 20px;
+	background-color: black;
+	color:#b8fcbd;
+}
+
+/* -------------------------Forms-------------------------*/
+
+.formshead{
+	font-family: 'Signika', sans-serif;
+	color: black;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.besideheader{
+	font-family: 'Asap', sans-serif;
+	font-size: 20px;
+	color: black;
+}
+
+/* ------------------------- Nurse Form -------------------------*/
+
+
