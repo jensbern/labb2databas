@@ -13,3 +13,9 @@ medical_issue(issue1, issue2, issue3, issue4, issue5, issue6, issue7, issue8, is
 after_treatment(patiendID, leaderID, to) to(home or hospital)
 
 drugs(drugID)
+
+team1 (1, 2, 3)
+team2 (3, 4, 5)
+team3 (5, 6, 7)
+team4 (7, 8, 9)
+team5 (8, 9, 10)
