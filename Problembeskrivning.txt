@@ -1,0 +1,15 @@
+patients (patientID, teamID, arrival , arrival_time, priority, drug) arrival(ambulance or on their own), priority(5(gravest) - 1(least pressing)) assigned by triage nurse
+
+drug(patientID, drug1, drug2, drug3) drug1-3 foreign key to drugsID
+
+emergency_room(team1, team2, team3, team4, team5) team1-5 inherits from team 
+
+team(teamID, leaderID, queue, issue1, issue2, issue3, treatment1, treatment2, treatment3 ) the queue contains patients and is sorted by firstly priority from patients and secondly by time of arrival  
+
+queue(patientID, teamID, priority, time-stamp, placement)
+
+medical_issue(issue1, issue2, issue3, issue4, issue5, issue6, issue7, issue8, issue9, issue10, treatment1, treatment2, treatment3, treatment4, treatment5, treatment6, treatment7, treatment8, treatment9, treatment10 )  treatment1 corresponds to issue1. 
+
+after_treatment(patiendID, leaderID, to) to(home or hospital)
+
+drugs(drugID)
