@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        
           <!-- Senaste jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 
@@ -20,10 +20,10 @@
         <title>Nurse Form</title>
     </head>
     <body>
-     <div class="container">
         <header>
+        <div class="container">
                 <h3 class="formshead">
-                    <a class="btn btn-default" href="startsida.html">
+                    <a class="btn btn-default" href="index.php">
                         <span class="glyphicon glyphicon-home" aria-hidden="true">
                         </span>
                     </a>
@@ -32,13 +32,15 @@
                         Nurse Form
                     </span>
                 </h3>
+                </div>
         </header>
 
         <main>
+        <div class="container">
             <!-- Form for enter a patient  -->
             <h3>Enter Patient's info</h3>
 
-            <form action="nurseForm.php" method="get">
+            <form action="nurse2.php" method="get">
                 <div class="form-group">
                   <label for="usr">Name:</label>
                   <!-- Namninputten  -->
@@ -46,9 +48,17 @@
                   
                 </div>
 
+                   <div class="form-group">
+                  <label for="usr">Personal ID:</label>
+                  <!-- Namninputten  -->
+                    <input type="number" min="0" max="9999999999999" name="patientid">
+                  
+                </div>
+
                 <div class="form-group">
                     <label for="pwd">Age:</label>
                     <input type="number" min="0" max="200" name="age">
+                    
                 </div>
 
                 <div class="form-group">
@@ -60,65 +70,43 @@
 
                 <div class="form-group">
                     <label for="sel1">Select Medical Issue:</label>
-                  <select class="form-control" id="sel1">
-                    <option>Issue1</option>
-                    <option>Issue2</option>
-                    <option>issue3</option>
-                    <option>issue4</option>
-                    <option>issue5</option>
-                    <option>issue6</option>
-                    <option>issue7</option>
-                    <option>issue8</option>
-                    <option>issue9</option>
-                    <option>issue10</option>
+                  <select class="form-control" id="sel1" name="issue">
+
+                  <?php
+                      ini_set('display_errors', 1); //skriver ut felmedelande
+                        
+                        // Kopplar till vår databas
+                        $dbconn = pg_connect("host=localhost port=5432 dbname=labb2") or die('Could not connect: ' . pg_last_error()); 
+
+                        $sql = "SELECT * from MedicalIssue;";
+                        $res = pg_query($dbconn, $sql);
+                        while($row = pg_fetch_array($res, null, PGSQL_ASSOC)){
+                            echo"<option value='".$row['issueid']."' name='issue'>".$row['issuename']."</option>";}
+                  ?>
+
+
                   </select>
                 </div>
 
                 <div class="form-group">
                     <label for="sel1">Priority:</label>
-                    <label class="radio-inline"><input type="radio" name="optradio">1</label>
-                    <label class="radio-inline"><input type="radio" name="optradio">2</label>
-                    <label class="radio-inline"><input type="radio" name="optradio">3</label>                
-                    <label class="radio-inline"><input type="radio" name="optradio">4</label>
-                    <label class="radio-inline"><input type="radio" name="optradio">5</label>
+                    <label class="radio-inline"><input type="radio" name="prio" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="prio" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="prio" value="3">3</label>                
+                    <label class="radio-inline"><input type="radio" name="prio" value="4">4</label>
+                    <label class="radio-inline"><input type="radio" name="prio" value="5">5</label>
                  </div>
-                 <div class="form-group">
-                      <label for="example-time-input">Time:</label>
-                        <input class="form-control" type="time" value="13:45:00" id="example-time-input">   
-                </div>
+
+                  <div class="form-group">
+                    <label for="sel1">Arrival:</label>
+                    <label class="radio-inline"><input type="radio" name="arrival" value="Ambulance">By Ambulance</label>
+                    <label class="radio-inline"><input type="radio" name="arrival" value="On their own">On their own</label>
+                 </div>
 
                 <input class="btn btn-info"  role="button" type ="submit">
-
             </form>
-
-
-
-
-            <!-- Team and Queue information -->
-            <hr>
-            <h3>Select a team's queue for your patient</h3>
-
-            <div class="form-group">
-                <label for="sel1">Available teams for your patients medical issue:</label>
-                <select class="form-control" id="sel1">
-                <option>Team1</option>
-                <option>Team2</option>
-                <option>Team3</option>
-                <option>Team4</option>
-                <option>Team5</option>
-              </select>
-            </div>
-
-            <a href="#" class="btn btn-info" role="button">See this team's queue</a>
-            <hr>
-            <p> Jens Berntsen 21 Male Insomnia 3</p>
-            <p> Emmeli Fall 23 Female Cold 3</p>
-
-            <a href="#" class="btn btn-info" role="button">Select this team's queue for your patient</a>
-            <hr>
-            <h4> Your patient will have to wait in the queue for: 40 minutes </h4>
-        </div>
         </main>
+        </div>
     </div>
     </body>
 </html>

@@ -100,8 +100,8 @@ INSERT INTO Treats VALUES
 (5, 8, 9, 10);
 /*(name, age, PatientID, TeamID, Priority, ArrivalTime, Arrival, AfterTreat, IssueID, Gender)*/
 INSERT INTO Patient VALUES
-('name1', 20, 1, 1, 3, '2017-09-09 15:30:00', 'Ambulance', null, 1, 'Male' ),
-('name2', 10, 2, 1, 4, '2017-09-09 18:30:00', 'Ambulance', null, 2, 'Female' ), 
+('name1', 20, 1, 1, 4, '2017-09-09 15:30:00', 'Ambulance', null, 1, 'Male' ),
+('name2', 10, 2, 1, 3, '2017-09-09 18:30:00', 'Ambulance', null, 2, 'Female' ), 
 ('name3', 50, 3, 2, 1, '2017-10-09 01:30:12', 'On their own', 'Hospital', 3, 'Other'), 
 ('name4', 90, 4, 3, 2, '2017-10-09 04:30:12', 'Ambulance', 'Home', 5, 'Other'), 
 ('name5', 50, 5, 3, 5, '2017-10-09 12:30:12', 'On their own', null, 6, 'Other'), 
