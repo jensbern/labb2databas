@@ -50,9 +50,8 @@
         $p_id = $_GET["patientid"];
         $p_atime = date("Y-m-d h:i:s");
 
-
          //Lägger in patienten i databasen
-        $sql = "INSERT INTO Patient VALUES('$p_name', $p_age, $p_id, NULL, $p_prio, '$p_atime', '$p_arrival', NULL, $p_issueid, '$p_gender');";
+        $sql = "INSERT INTO Patient VALUES('$p_name', $p_age, $p_id, NULL, $p_prio, '$p_atime', '$p_arrival', NULL, $p_issueid, '$p_gender', NULL);";
         $insert = pg_query($dbconn, $sql);
 
     ?>
@@ -65,22 +64,25 @@
       			     <?php
       			       ini_set('display_errors', 1);
                         $dbconn = pg_connect("host=localhost port=5432 dbname=labb2") or die('Could not connect: ' . pg_last_error()); 
-                        $queueQuery = "SELECT queue.patientid, priority, position, t.teamID, patient.name from patient, queue, (SELECT teamID from Treats where issueid1 = $p_issueid or issueid2 = $p_issueid or issueid3 = $p_issueid) as t where queue.teamid = t.teamid and queue.patientid = patient.patientid;";
+
+                        $queueQuery = "SELECT queue.patientid, queue.priority, t.teamID, patient.name FROM patient, queue, (SELECT teamID from Treats where issueid1 = $p_issueid or issueid2 = $p_issueid or issueid3 = $p_issueid) as t WHERE queue.teamid = t.teamid and queue.patientid = patient.patientid ORDER BY queue.teamid;";
                         $res = pg_query($dbconn, $queueQuery);     
-                    
+                        
+                        $help = "";
                         while($r = pg_fetch_array($res, null, PGSQL_ASSOC)){
-                            if ("".$r['position']."" == "1"){
+                            if ("".$r['teamid']."" != $help){
                                 echo "<br>";
                                 echo "<h4>Queue for team: " .$r['teamid']."</h4>";
                             }
-                            echo  "<p> <strong>Name:</strong> ".$r['name']. " <strong>ID:</strong> " .$r['patientid']. " <strong>Priority:</strong> " .$r['priority']. " <strong>Position:</strong> " .$r['position']."</p>";
+                            echo  "<p> <strong>Name:</strong> ".$r['name']. " <strong>ID:</strong> " .$r['patientid']. " <strong>Priority:</strong> " .$r['priority']."</p>";
+                            $help = "".$r['teamid']."";
                         }
                     ?>
                      <br>
 
                 <div class="form-group">
                 <label>Select patient:</label>
-                     <select class="form-control" id="sel1" name="patientid">
+                        <select class="form-control" id="sel1" name="patientid">
                     <?php 
                         $p_name = $_GET["name"];
                         echo "<option value='$p_id'>$p_name</label>";

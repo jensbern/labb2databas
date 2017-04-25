@@ -26,7 +26,7 @@
             <p class="undertext"> Here the staff at the Emergency Room can enter and receive information about the patients</p>
             <div class="buttondiv">
                 <a href="nurseform.php" class="btn btn-info" role="button">I'm a nurse</a>
-                <a href="doctorform.html" class="btn btn-info" role="button">I'm a doctor/teamleader</a>
+                <a href="doctor.php" class="btn btn-info" role="button">I'm a doctor/teamleader</a>
             </div>
         </div>
     </body>

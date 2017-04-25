@@ -36,7 +36,6 @@
     <div class="container">
 
         <?php
-        ini_set('display_errors', 1); //skriver ut felmedelande
          // Kopplar till vår databas
         $dbconn = pg_connect("host=localhost port=5432 dbname=labb2") or die('Could not connect: ' . pg_last_error()); 
 
@@ -44,13 +43,39 @@
         $p_id = $_GET["patientid"];
         $p_team = $_GET["teamid"];
 
-        $usql = ()
+        //Lägger in teamet i patienten
+        $usql = "UPDATE Patient SET teamid = $p_team WHERE patientid = $p_id;"; 
+        $res = pg_query($dbconn, $usql); 
 
-        echo $p_id;
-        //afterTreat är det enda som ej finns med, NULL nu.
+        //Hämta alla patienter som står i samma teams kö
+        $queue = "SELECT queue.priority FROM queue, patient WHERE patient.patientid=$p_id and queue.teamid=$p_team and queue.priority>=patient.priority;";
+        $res2 = pg_query($dbconn, $queue); 
+
+        //Räkna ut tiden för patienten
+        $w_time = 0;
+        while($r = pg_fetch_array($res2, null, PGSQL_ASSOC)){
+            $w_time += "".$r['priority'].""*10;
+         
+        };          
+
+        //Lägger in vänttid
+        $qsql = "UPDATE Patient SET queuetime = $w_time WHERE patientid = $p_id;"; 
+        $uwaitsql = pg_query($dbconn, $qsql); 
 
         echo "<h3> Your patient has successfully been added in the queue for team $p_team!</h3>";
-        echo "<h5> The waiting time for your patient is: BLA </h5>";
+        echo "<h5> The waiting time for your patient is: $w_time min </h5>";
+
+        //Lägg till patienten i kön
+        $sql_prio = "SELECT priority FROM patient WHERE patientid = $p_id;";
+        $res3 = pg_query($dbconn, $sql_prio);
+
+        $p_prio = 0;
+        while($r = pg_fetch_array($res3, null, PGSQL_ASSOC)){
+           $p_prio += "".$r['priority']."";
+        };  
+
+        $insert_queue = "INSERT INTO queue VALUES($p_id, $p_team, $p_prio);";  
+        $insert = pg_query($dbconn, $insert_queue); 
         ?>
 
   

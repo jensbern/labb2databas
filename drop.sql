@@ -6,5 +6,7 @@ DROP TABLE Team cascade;
 DROP TABLE Queue;
 DROP TABLE EmergencyRoom;
 DROP TABLE Treats;
-DROP TABLE Treatments cascade;
+DROP TABLE Treatment cascade;
 DROP TABLE Procedure;
+/* TA BORT VID LABB */
+DROP TABLE PatientLog;

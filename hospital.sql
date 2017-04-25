@@ -1,6 +1,4 @@
 /*Here comes the schema*/
-
-
 CREATE TABLE Drug
 (	DrugID NUMERIC CONSTRAINT DrugKey PRIMARY KEY, 
 	DrugName VARCHAR(35),
@@ -30,6 +28,7 @@ CREATE TABLE MedicalIssue
 
 CREATE TABLE Procedure
 (	ProcedureID VARCHAR(4) CONSTRAINT ProcedureKey PRIMARY KEY,
+	ProcedureName VARCHAR(35),
 	Cost NUMERIC CONSTRAINT ProcedureCost
 		CHECK (Cost > 0)
 );
@@ -59,19 +58,21 @@ CREATE TABLE Patient
 	ArrivalTime TIMESTAMP NOT NULL, /* YYYY-MM-DD HH:MI:SS    SELECT DATE(Arrival_time) will return it in the format you appear to want, while still preserving the behavior you want for the column.*/
 	Arrival VARCHAR(12) CONSTRAINT ArrivalCheck
 		CHECK (Arrival = 'Ambulance' OR Arrival = 'On their own'), 
-	AfterTreat VARCHAR(8) CONSTRAINT AfterTreatCheck
+	AfterTreat VARCHAR(35) CONSTRAINT AfterTreatCheck
 		CHECK (AfterTreat = NULL OR AfterTreat = 'Home' OR AfterTreat = 'Hospital'), 
 	IssueID NUMERIC References MedicalIssue(IssueID),
 	Gender VARCHAR(6) CONSTRAINT GenderCheck
-		CHECK (Gender = 'Female' OR Gender = 'Male' OR Gender = 'Other'));
+		CHECK (Gender = 'Female' OR Gender = 'Male' OR Gender = 'Other'),
+	queueTime NUMERIC
+);
 
 
 CREATE TABLE Queue
-(	PatientID NUMERIC References Patient(PatientID), 
+(	PatientID NUMERIC References Patient(PatientID) UNIQUE, 
 	/*ArrivalTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,*/
 	TeamID NUMERIC References Team(TeamID),
-	Position NUMERIC CONSTRAINT PositionCheck
-		CHECK (Position > 0)
+	Priority NUMERIC CONSTRAINT PriorityCheck
+		CHECK (Priority > 0)
 );
 
 CREATE TABLE DrugsTaken
@@ -80,13 +81,24 @@ CREATE TABLE DrugsTaken
 	Drug2 NUMERIC References Drug(DrugID), 
 	Drug3 NUMERIC References Drug(DrugID)
 );
-/*
-team1 (1, 2, 3)
-team2 (3, 4, 5)
-team3 (5, 6, 7)
-team4 (7, 8, 9)
-team5 (8, 9, 10)
-YYYY-MM-DD HH:MI:SS
-*/
+
+CREATE TABLE PatientLog
+(	PatientID NUMERIC,
+	Name VARCHAR(50),
+	Gender VARCHAR(6),
+	Age NUMERIC,
+	Drug1 VARCHAR(35),
+	Drug2 VARCHAR(35),
+	Drug3 VARCHAR(35),
+	ProcedureName1 VARCHAR(35),
+	ProcedureName2 VARCHAR(35),
+	ProcedureName3 VARCHAR(35),
+	Cost NUMERIC,
+	AfterTreat VARCHAR(35),
+	Issue VARCHAR(35),
+	ArrivalTime TIMESTAMP,
+	queueTime NUMERIC
+);
+
 
 
